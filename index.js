@@ -20,7 +20,7 @@ function fontIconCreatePlugin(options) {
         publishPath:"./",
         svgPath:[]
     },options);
-    this.options.loaderName='@icon-maker-loader';
+    this.options.loaderName='vusion-iconmaker';
 }
 
 fontIconCreatePlugin.prototype.apply = function(compiler) {

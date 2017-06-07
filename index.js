@@ -12,22 +12,36 @@ let ejs=require("ejs");
 function fontIconCreatePlugin(options) {
     // 使用配置（options）设置插件实例
     this.options=Object.assign({
-        entry:'/src/icons',
-        output:'/src/iconFont',
+        entry:'',
+        output:'/iconFont',
         name:'iconFont',
         styleTemplate:__dirname+'/demo.css',
         htmlTemplate:__dirname+'/i-font-preview.html',
-        publishPath:"./"
+        publishPath:"./",
+        svgPath:[]
     },options);
+    this.options.loaderName='@icon-maker-loader';
 }
 
 fontIconCreatePlugin.prototype.apply = function(compiler) {
     // right after emit, files will be generated
+    compiler.plugin("compilation",(compilation)=>{
+        //主要的编译实例
+        //随后所有的方法都从 compilation.plugin 上得来
+        compilation.plugin('normal-module-loader',(loaderContext, module) => {
+            //这里是所以模块被加载的地方
+            //一个接一个，此时还没有依赖被创建
+            if(module.request.indexOf(this.options.loaderName)!==-1&&module.resource.indexOf(this.options.loaderName)===-1){
+                this.options.svgPath.push(module.resource);
+            }
+        });
+    });
+    // right after emit, files will be generated
     compiler.plugin("emit", (compilation, callback) => {
-        //console.log(compiler);
         let svgList=readAllIconSvg(this.options.entry instanceof Array?this.options.entry:[this.options.entry]);
         const dirName=path.join(runPath, this.options.output);
         mkdir(dirName);
+        svgList=delRepeat(svgList.concat(this.options.svgPath));
 
         svgList.forEach((value)=>{
             iconMaker.addSvg(value);
@@ -47,7 +61,7 @@ fontIconCreatePlugin.prototype.apply = function(compiler) {
             this.handleCss(font).then((options)=>{
                 fs.writeFile(dirName+'/'+this.options.name+'.css', options.result,(err)=>{
                     if(err) throw err;
-                    console.log('fontIconCreatePlugin create '+dirName+"/"+this.options.name+'.css');
+                    //console.log('fontIconCreatePlugin create '+dirName+"/"+this.options.name+'.css');
                 });
                 return options
             }).then((options) => {
@@ -55,7 +69,7 @@ fontIconCreatePlugin.prototype.apply = function(compiler) {
             }).then((html)=>{
                 fs.writeFile(dirName+'/'+this.options.name+'-preview.html', html,(err)=>{
                     if(err) throw err;
-                    console.log('fontIconCreatePlugin create '+dirName+"/"+this.options.name+'-preview.html');
+                    //console.log('fontIconCreatePlugin create '+dirName+"/"+this.options.name+'-preview.html');
                 });
             });;
 
@@ -150,6 +164,17 @@ function mkdir(dirpath,dirname){
             fs.mkdirSync(dirpath);
         }
     }
+}
+
+function delRepeat(arry) {
+    arry.sort();//排序
+    var n = [arry[0]];
+    for (var i = 1; i < arry.length; i++) {
+        if (arry[i] !== n[n.length - 1]) {
+            n.push(arry[i]);
+        }
+    }
+    return n;
 }
 
 module.exports = fontIconCreatePlugin;

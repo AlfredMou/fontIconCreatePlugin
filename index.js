@@ -7,42 +7,55 @@ let IconMaker=require('icon-maker');
 let iconMaker = new IconMaker();
 let runPath=path.resolve('./');
 let ejs=require("ejs");
+let util=require('./util.js');
+
+let fileNamePath={};
 
 
 function fontIconCreatePlugin(options) {
     // 使用配置（options）设置插件实例
     this.options=Object.assign({
         entry:'',
-        output:'/iconFont',
+        output:'/src/iconFont',
         name:'iconFont',
         styleTemplate:__dirname+'/demo.css',
         htmlTemplate:__dirname+'/i-font-preview.html',
         publishPath:"./",
-        svgPath:[]
     },options);
     this.options.loaderName='vusion-iconmaker';
 }
 
 fontIconCreatePlugin.prototype.apply = function(compiler) {
     // right after emit, files will be generated
+    let svgList=util.readAllIconSvg(this.options.entry instanceof Array?this.options.entry:[this.options.entry],runPath);
+    fileNamePath=util.getRepeatClassNameSvg(svgList);
     compiler.plugin("compilation",(compilation)=>{
         //主要的编译实例
         //随后所有的方法都从 compilation.plugin 上得来
         compilation.plugin('normal-module-loader',(loaderContext, module) => {
             //这里是所以模块被加载的地方
             //一个接一个，此时还没有依赖被创建
+
             if(module.request.indexOf(this.options.loaderName)!==-1&&module.resource.indexOf(this.options.loaderName)===-1){
-                this.options.svgPath.push(module.resource);
+                let filePath=module.resource.split("/"),fileName=filePath[filePath.length-1],name=fileName.split(".")[0];
+                fileNamePath=util.delRepeatName(module.resource,fileNamePath);
+                if(fileNamePath[name].length==1){
+                    loaderContext.className=name;
+                }else{
+                    loaderContext.className=name+"-"+(fileNamePath[name].length-1);
+                }
+
             }
         });
     });
     // right after emit, files will be generated
     compiler.plugin("emit", (compilation, callback) => {
-        let svgList=readAllIconSvg(this.options.entry instanceof Array?this.options.entry:[this.options.entry]);
+        let repeatClassNames,self=this,hasSVGCache=false,resultSvg,svgList;
         const dirName=path.join(runPath, this.options.output);
-        mkdir(dirName);
-        svgList=delRepeat(svgList.concat(this.options.svgPath));
-
+        util.mkdir(dirName);
+        resultSvg=util.createFileCache(fileNamePath,dirName+"/SAME_SVG_CACHE");
+        hasSVGCache=resultSvg.hasCache;
+        svgList=resultSvg.svgList;
         svgList.forEach((value)=>{
             iconMaker.addSvg(value);
         });
@@ -67,11 +80,24 @@ fontIconCreatePlugin.prototype.apply = function(compiler) {
             }).then((options) => {
                 return this.createDemoHtml(options.result,options.data)
             }).then((html)=>{
-                fs.writeFile(dirName+'/'+this.options.name+'-preview.html', html,(err)=>{
-                    if(err) throw err;
-                    //console.log('fontIconCreatePlugin create '+dirName+"/"+this.options.name+'-preview.html');
+                return new Promise((res,ref)=>{
+                    fs.writeFile(dirName+'/'+this.options.name+'-preview.html', html,(err)=>{
+                        if(err) throw err;
+                        console.log('fontIconCreatePlugin create '+dirName+"/"+this.options.name+'-preview.html');
+                        res();
+                    });
                 });
-            });;
+            }).then(()=>{
+                if(hasSVGCache){
+                    console.log('remove cache file '+dirName+"/SAME_SVG_CACHE");
+                    util.rmdirSync(dirName+"/SAME_SVG_CACHE");
+                }
+            }).catch(()=>{
+                if(hasSVGCache){
+                    console.log('remove cache file '+dirName+"/SAME_SVG_CACHE");
+                    util.rmdirSync(dirName+"/SAME_SVG_CACHE");
+                }
+            });
 
         });
         callback();
@@ -125,56 +151,6 @@ fontIconCreatePlugin.prototype.extractVar=function(css) {
     }
 }
 
-function readAllIconSvg(entryList) {
-    let files = [],jsPath,dirs,matchs,entery;
 
-    for(let i=0,len=entryList.length;i<len;i++){
-        entery=entryList[i];
-        jsPath = path.join(runPath, entery);
-        dirs = fs.readdirSync(jsPath);
-        matchs = [];
-        dirs.forEach(function (item) {
-            matchs = item.match(/(.+)\.svg$/);
-            if (matchs) {
-                files.push(path.resolve(jsPath, item));
-            }
-        });
-    }
-    return files;
-}
-
-function mkdir(dirpath,dirname){
-    //判断是否是第一次调用
-    if(typeof dirname === "undefined"){
-        if(fs.existsSync(dirpath)){
-            return;
-        }else{
-            mkdir(dirpath,path.dirname(dirpath));
-        }
-    }else{
-        //判断第二个参数是否正常，避免调用时传入错误参数
-        if(dirname !== path.dirname(dirpath)){
-            mkdir(dirpath);
-            return;
-        }
-        if(fs.existsSync(dirname)){
-            fs.mkdirSync(dirpath)
-        }else{
-            mkdir(dirname,path.dirname(dirname));
-            fs.mkdirSync(dirpath);
-        }
-    }
-}
-
-function delRepeat(arry) {
-    arry.sort();//排序
-    var n = [arry[0]];
-    for (var i = 1; i < arry.length; i++) {
-        if (arry[i] !== n[n.length - 1]) {
-            n.push(arry[i]);
-        }
-    }
-    return n;
-}
 
 module.exports = fontIconCreatePlugin;

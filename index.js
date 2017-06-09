@@ -21,6 +21,10 @@ function fontIconCreatePlugin(options) {
         styleTemplate:__dirname+'/demo.css',
         htmlTemplate:__dirname+'/i-font-preview.html',
         publishPath:"./",
+        suffix:{
+            css:".css",
+            html:".html"
+        }
     },options);
     this.options.loaderName='vusion-iconmaker';
 }
@@ -50,10 +54,20 @@ fontIconCreatePlugin.prototype.apply = function(compiler) {
     });
     // right after emit, files will be generated
     compiler.plugin("emit", (compilation, callback) => {
-        let repeatClassNames,self=this,hasSVGCache=false,resultSvg,svgList;
-        const dirName=path.join(runPath, this.options.output);
-        util.mkdir(dirName);
-        resultSvg=util.createFileCache(fileNamePath,dirName+"/SAME_SVG_CACHE");
+        const suffix=this.options.suffix;
+        let hasSVGCache=false,resultSvg,svgList;
+        // const dirName=path.join(runPath, this.options.output),output=this.options.output;
+        let {fontDirName,htmlDirName,cssDirName}=getOutputPath(this.options.output,runPath);
+
+        if(fontDirName===htmlDirName&&fontDirName===cssDirName){
+            util.mkdir(fontDirName);
+        }else{
+            util.mkdir(fontDirName);
+            util.mkdir(htmlDirName);
+            util.mkdir(cssDirName);
+        }
+
+        resultSvg=util.createFileCache(fileNamePath,fontDirName+"/SAME_SVG_CACHE");
         hasSVGCache=resultSvg.hasCache;
         svgList=resultSvg.svgList;
         svgList.forEach((value)=>{
@@ -65,37 +79,37 @@ fontIconCreatePlugin.prototype.apply = function(compiler) {
             var fontFiles=font.fontFiles;
 
             for(var n=0,len=fontFiles.length;n<len;n++){
-                let createFilePath= dirName+fontFiles[n].path;
+                let createFilePath= fontDirName+fontFiles[n].path;
                 fs.writeFile(createFilePath, fontFiles[n].contents, function(err){
                     if(err) throw err;
                     console.log('fontIconCreatePlugin create '+createFilePath);
                 });
             }
             this.handleCss(font).then((options)=>{
-                fs.writeFile(dirName+'/'+this.options.name+'.css', options.result,(err)=>{
+                fs.writeFile(cssDirName+'/'+this.options.name+suffix.css, options.result,(err)=>{
                     if(err) throw err;
-                    //console.log('fontIconCreatePlugin create '+dirName+"/"+this.options.name+'.css');
+                    console.log('fontIconCreatePlugin create '+cssDirName+"/"+this.options.name+'.css');
                 });
                 return options
             }).then((options) => {
                 return this.createDemoHtml(options.result,options.data)
             }).then((html)=>{
                 return new Promise((res,ref)=>{
-                    fs.writeFile(dirName+'/'+this.options.name+'-preview.html', html,(err)=>{
+                    fs.writeFile(htmlDirName+'/'+this.options.name+'-preview'+suffix.html, html,(err)=>{
                         if(err) throw err;
-                        console.log('fontIconCreatePlugin create '+dirName+"/"+this.options.name+'-preview.html');
+                        console.log('fontIconCreatePlugin create '+htmlDirName+"/"+this.options.name+'-preview.html');
                         res();
                     });
                 });
             }).then(()=>{
                 if(hasSVGCache){
-                    console.log('remove cache file '+dirName+"/SAME_SVG_CACHE");
-                    util.rmdirSync(dirName+"/SAME_SVG_CACHE");
+                    console.log('remove cache file '+fontDirName+"/SAME_SVG_CACHE");
+                    util.rmdirSync(fontDirName+"/SAME_SVG_CACHE");
                 }
             }).catch(()=>{
                 if(hasSVGCache){
-                    console.log('remove cache file '+dirName+"/SAME_SVG_CACHE");
-                    util.rmdirSync(dirName+"/SAME_SVG_CACHE");
+                    console.log('remove cache file '+fontDirName+"/SAME_SVG_CACHE");
+                    util.rmdirSync(fontDirName+"/SAME_SVG_CACHE");
                 }
             });
 

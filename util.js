@@ -38,22 +38,22 @@ module.exports={
         }
     })(),
     readAllIconSvg:function (entryList,runPath) {
-    let files = [],jsPath,dirs,matchs,entery;
+        let files = [],jsPath,dirs,matchs,entery;
 
-    for(let i=0,len=entryList.length;i<len;i++){
-        entery=entryList[i];
-        jsPath = path.join(runPath, entery);
-        dirs = fs.readdirSync(jsPath);
-        matchs = [];
-        dirs.forEach(function (item) {
-            matchs = item.match(/(.+)\.svg$/);
-            if (matchs) {
-                files.push(path.resolve(jsPath, item));
-            }
-        });
-    }
-    return files;
-},
+        for(let i=0,len=entryList.length;i<len;i++){
+            entery=entryList[i];
+            jsPath = path.join(runPath, entery);
+            dirs = fs.readdirSync(jsPath);
+            matchs = [];
+            dirs.forEach(function (item) {
+                matchs = item.match(/(.+)\.svg$/);
+                if (matchs) {
+                    files.push(path.resolve(jsPath, item));
+                }
+            });
+        }
+        return files;
+    },
 
     mkdir:function (dirpath,dirname){
     //判断是否是第一次调用
@@ -79,15 +79,15 @@ module.exports={
     },
 
     delRepeat:function (arry) {
-    arry.sort();//排序
-    var n = [arry[0]];
-    for (var i = 1; i < arry.length; i++) {
-        if (arry[i] !== n[n.length - 1]) {
-            n.push(arry[i]);
+        arry.sort();//排序
+        var n = [arry[0]];
+        for (var i = 1; i < arry.length; i++) {
+            if (arry[i] !== n[n.length - 1]) {
+                n.push(arry[i]);
+            }
         }
-    }
-    return n;
-},
+        return n;
+    },
 
     getRepeatClassNameSvg:function (arry) {
         let n = [],nameList=[],svgList=[],result={};
@@ -132,7 +132,23 @@ module.exports={
             hasCache:hasCache
         };
     },
-
+    getOutputPath(output,rootPath){
+        let fontDirName,htmlDirName,cssDirName;
+        if(output instanceof Object){
+            fontDirName = output.font;
+            htmlDirName = output.html||output.font;
+            cssDirName = output.css||output.font;
+        }else if(typeof output==="string"){
+            fontDirName = output;
+            htmlDirName = output;
+            cssDirName = output;
+        }
+        return {
+            fontDirName:path.join(fontDirName,rootPath),
+            htmlDirName:path.join(htmlDirName,rootPath),
+            cssDirName:path.join(cssDirName,rootPath)
+        }
+    },
     copy:function(src, dst) {
         fs.writeFileSync(dst, fs.readFileSync(src));
     }

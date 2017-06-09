@@ -57,7 +57,7 @@ fontIconCreatePlugin.prototype.apply = function(compiler) {
         const suffix=this.options.suffix;
         let hasSVGCache=false,resultSvg,svgList;
         // const dirName=path.join(runPath, this.options.output),output=this.options.output;
-        let {fontDirName,htmlDirName,cssDirName}=getOutputPath(this.options.output,runPath);
+        let {fontDirName,htmlDirName,cssDirName}=util.getOutputPath(this.options.output,runPath);
 
         if(fontDirName===htmlDirName&&fontDirName===cssDirName){
             util.mkdir(fontDirName);

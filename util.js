@@ -144,9 +144,9 @@ module.exports={
             cssDirName = output;
         }
         return {
-            fontDirName:path.join(fontDirName,rootPath),
-            htmlDirName:path.join(htmlDirName,rootPath),
-            cssDirName:path.join(cssDirName,rootPath)
+            fontDirName:path.join(rootPath,fontDirName),
+            htmlDirName:path.join(rootPath,htmlDirName),
+            cssDirName:path.join(rootPath,cssDirName)
         }
     },
     copy:function(src, dst) {

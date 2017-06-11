@@ -1,6 +1,6 @@
 # fontIconCreatePlugin
 
-##基本调用方式
+## 基本调用方式
 
 同一般的webpack plugin引入fonticon-create-plugin,在webpack config中实例化。
 ```javascript
@@ -21,12 +21,12 @@ module.exports = {
 FontIconCreatePlugin会将'/output/font'中的svg文件读取生成"eot", "woff", "ttf", "svg"四个字体文件，一个css文件，一个
 预览的html文件
 
-##FontIconCreatePlugin支持参数
+## FontIconCreatePlugin支持参数
 
-###name
+### name
 字体图标库的名称，该参数影响生成图标class名的前缀
 
-###output
+### output
 生成的图标文件的输出地址，可指定为对象将html，css及font字体文件输出到三个不同的文件目录下，考虑发布css，font和预览html在不同目录下
 ```javascript
 {
@@ -35,7 +35,7 @@ FontIconCreatePlugin会将'/output/font'中的svg文件读取生成"eot", "woff"
     html:"/output/font"
 }
 ```
-###publishPath
+### publishPath
 指定css中字体图标的引用路径，可以用于配置cdn路径或者是静态资源路径
 
 ```javascript
@@ -59,7 +59,7 @@ new FontIconCreatePlugin({
 }
 ```
 
-###suffix
+### suffix
 考虑使用如sass这种的样式预处理，可以指定生成的文件的后缀名，如指定css为.sass后缀最终会生成icon.sass的字体样式文件
 ```javascript
     new FontIconCreatePlugin({
@@ -71,12 +71,12 @@ new FontIconCreatePlugin({
         publishPath:"/publish/font/"
     })
 ```
-###styleTemplate与htmlTemplate
+### styleTemplate与htmlTemplate
 
 指定FontIconCreatePlugin生成的style文件模板及预览html文件的模板
 
 
-##按需加载图标
+## 按需加载图标
 
 结合[vusion-iconmaker](https://github.com/hzlinguanfu/vusion-iconmaker)这个loader可以实现字体图标的按需加载
 如下配置loader

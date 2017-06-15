@@ -1,16 +1,16 @@
-# fontIconCreatePlugin
+# IconFontCreatePlugin
 
 ## 基本调用方式
 
 同一般的webpack plugin引入iconfont-create-plugin,在webpack config中实例化。
 ```javascript
 
-const FontIconCreatePlugin = require('iconfont-create-plugin');
+const IconFontCreatePlugin = require('iconfont-create-plugin');
 
 module.exports = {
 
     plugins: [
-        new FontIconCreatePlugin({
+        new IconFontCreatePlugin({
             name:"icon",
             output:'/output/font',
         }),
@@ -18,10 +18,10 @@ module.exports = {
 }
 
 ```
-FontIconCreatePlugin会将'/output/font'中的svg文件读取生成"eot", "woff", "ttf", "svg"四个字体文件，一个css文件，一个
+IconFontCreatePlugin会将'/output/font'中的svg文件读取生成"eot", "woff", "ttf", "svg"四个字体文件，一个css文件，一个
 预览的html文件
 
-## FontIconCreatePlugin支持参数
+## IconFontCreatePlugin支持参数
 
 ### name
 字体图标库的名称，该参数影响生成图标class名的前缀
@@ -39,7 +39,7 @@ FontIconCreatePlugin会将'/output/font'中的svg文件读取生成"eot", "woff"
 指定css中字体图标的引用路径，可以用于配置cdn路径或者是静态资源路径
 
 ```javascript
-new FontIconCreatePlugin({
+new IconFontCreatePlugin({
     name:"icon",
     output:'/output/font',
     publishPath:"/publish/font/"
@@ -62,7 +62,7 @@ new FontIconCreatePlugin({
 ### suffix
 考虑使用如sass这种的样式预处理，可以指定生成的文件的后缀名，如指定css为.sass后缀最终会生成icon.sass的字体样式文件
 ```javascript
-    new FontIconCreatePlugin({
+    new IconFontCreatePlugin({
         name:"icon",
         output:'/output/font',
         suffix:{
@@ -73,7 +73,7 @@ new FontIconCreatePlugin({
 ```
 ### styleTemplate与htmlTemplate
 
-指定FontIconCreatePlugin生成的style文件模板及预览html文件的模板
+指定IconFontCreatePlugin生成的style文件模板及预览html文件的模板
 
 
 ## 按需加载图标

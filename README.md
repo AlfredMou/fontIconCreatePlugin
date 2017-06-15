@@ -2,10 +2,10 @@
 
 ## 基本调用方式
 
-同一般的webpack plugin引入fonticon-create-plugin,在webpack config中实例化。
+同一般的webpack plugin引入iconfont-create-plugin,在webpack config中实例化。
 ```javascript
 
-const FontIconCreatePlugin = require('fonticon-create-plugin');
+const FontIconCreatePlugin = require('iconfont-create-plugin');
 
 module.exports = {
 

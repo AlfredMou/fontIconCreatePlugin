@@ -1,5 +1,15 @@
 # IconFontCreatePlugin
 
+##安装
+
+
+```javascript
+
+npm install iconfont-create-plugin
+
+```
+
+
 ## 基本调用方式
 
 同一般的webpack plugin引入iconfont-create-plugin,在webpack config中实例化。
@@ -78,7 +88,7 @@ new IconFontCreatePlugin({
 
 ## 按需加载图标
 
-结合[vusion-iconmaker](https://github.com/hzlinguanfu/vusion-iconmaker)这个loader可以实现字体图标的按需加载
+结合[vusion-iconmaker](https://www.npmjs.com/package/vusion-iconmaker)这个loader可以实现字体图标的按需加载
 如下配置loader
 ```javascript
  rules: [

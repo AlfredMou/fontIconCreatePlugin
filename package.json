@@ -1,6 +1,6 @@
 {
   "name": "iconfont-create-plugin",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "a webpack plugin for create icon font",
   "main": "index.js",
   "scripts": {
@@ -15,5 +15,13 @@
   "dependencies": {
     "ejs": "^2.5.6",
     "icon-maker": "^0.2.6"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlfredMou/fontIconCreatePlugin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AlfredMou/fontIconCreatePlugin/issues"
+  },
+  "homepage": "https://github.com/AlfredMou/fontIconCreatePlugin#readme"
 }

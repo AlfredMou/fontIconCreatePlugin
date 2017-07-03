@@ -98,7 +98,8 @@ module.exports={
         return result
     },
     delRepeatName:function (value,result) {
-        let filePath=value.split("/"),fileName=filePath[filePath.length-1],name=fileName.split(".")[0];
+        let filePath=value.split("/"),fileName=filePath[filePath.length-1],names=fileName.split(".");
+        let name=names.slice(0,names.length-1).join("");
         if(result[name]===undefined){
             result[name]=[];
             result[name].push(value);

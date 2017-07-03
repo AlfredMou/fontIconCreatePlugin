@@ -41,7 +41,8 @@ fontIconCreatePlugin.prototype.apply = function(compiler) {
             //一个接一个，此时还没有依赖被创建
 
             if(module.request.indexOf(this.options.loaderName)!==-1&&module.resource.indexOf(this.options.loaderName)===-1){
-                let filePath=module.resource.split("/"),fileName=filePath[filePath.length-1],name=fileName.split(".")[0];
+                let filePath=module.resource.split("/"),fileName=filePath[filePath.length-1],names=fileName.split(".");
+                let name=names.slice(0,names.length-1).join("");
                 fileNamePath=util.delRepeatName(module.resource,fileNamePath);
                 if(fileNamePath[name].length==1){
                     loaderContext.className=name;

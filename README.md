@@ -33,6 +33,17 @@ IconFontCreatePlugin会将'/output/font'中的svg文件读取生成"eot", "woff"
 
 ## IconFontCreatePlugin支持参数
 
+### entry
+svg图标路径，传该值会从传入路径下读取svg生成字体文件
+
+```javascript
+entry:"/src/.icons",
+```
+或者是多个文件路径数组
+```javascript
+entry:["/src/.icons","/src/icons"],
+```
+
 ### name
 字体图标库的名称，该参数影响生成图标class名的前缀
 
@@ -83,7 +94,18 @@ new IconFontCreatePlugin({
 ```
 ### styleTemplate与htmlTemplate
 
-指定IconFontCreatePlugin生成的style文件模板及预览html文件的模板
+指定IconFontCreatePlugin生成的style文件模板及预览html文件的模板，满足预览模板更改的需求。模板使用ejs模板生成
+提供了以下变量注入
+```javascript
+    {
+        name://字体库名,
+        publishPath://发布路径,
+        fontContent:""//生成字体css,
+        fontName:{
+            a:'\f1023s'
+        }//生成字体列表
+    }
+```
 
 
 ## 按需加载图标

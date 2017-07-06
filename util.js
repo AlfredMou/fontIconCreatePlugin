@@ -116,11 +116,14 @@ module.exports={
                 list.push(classNames[name][0]);
             }else{
                 classNames[name].forEach((val,index)=>{
-                        let suffix="";
+                        let suffix="",newPath;
                         if(index!==0){
                             suffix=index;
+                            newPath=cachePath+"/"+name+"-"+suffix+".svg";
+                        }else{
+                            newPath=cachePath+"/"+name+".svg";
                         }
-                        let newPath=cachePath+"/"+name+"-"+suffix+".svg";
+
                         this.copy(val,newPath);
                         hasCache=true;
                         list.push(newPath);

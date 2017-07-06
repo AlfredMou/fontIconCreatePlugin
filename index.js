@@ -150,7 +150,7 @@ fontIconCreatePlugin.prototype.createDemoHtml = function (css,data) {
 fontIconCreatePlugin.prototype.extractVar=function(css) {
     let name = this.options.name,
         publishPath=this.options.publishPath,regResult,
-        classReg= new RegExp('\\.'+name+'-([0-9a-zA-Z-]*)\\:before\\s*\\{\\n\\s*content\\:\\s*\\"(\\\\f[0-9]*)\\"\\;\\s*\\n\\s*\\}','g');
+        classReg= new RegExp('\\.'+name+'-([0-9a-zA-Z-]*)\\:before\\s*\\{\\n\\s*content\\:\\s*\\"(\\\\f[0-9a-zA-Z]*)\\"\\;\\s*\\n\\s*\\}','g');
     let fontBody=[],fontName={};
     regResult=classReg.exec(css);
     while(regResult){

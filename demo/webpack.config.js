@@ -24,15 +24,7 @@ module.exports = {
         new FontIconCreatePlugin({
             entry:"/src/.icons",
             name:"icon",
-            output:{
-                font:"/src/iconfont",
-                css:"/src/css/font",
-                html:"/src/iconfont"
-            },
-            suffix:{
-                css:".mcss",
-                html:".html"
-            },
+            output:"/src/iconfont",
             //publishPath:"/publish/font/"
         }),
     ],

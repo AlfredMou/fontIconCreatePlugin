@@ -55,7 +55,10 @@ fontIconCreatePlugin.prototype.apply = function(compiler) {
     });
     // right after emit, files will be generated
     compiler.plugin("emit", (compilation, callback) => {
-        const suffix=this.options.suffix;
+        const suffix=Object.assign({
+            css:".css",
+            html:".html"
+        },this.options.suffix);
         let hasSVGCache=false,resultSvg,svgList;
         // const dirName=path.join(runPath, this.options.output),output=this.options.output;
         let {fontDirName,htmlDirName,cssDirName}=util.getOutputPath(this.options.output,runPath);

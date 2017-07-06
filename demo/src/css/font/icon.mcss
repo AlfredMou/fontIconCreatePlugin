@@ -31,7 +31,7 @@
     font-weight: normal !important;
 }
 
-.icon-arrow-left-:before {
+.icon-arrow-left:before {
 	content: "\f101";
 }
 .icon-arrow-left-1:before {
@@ -43,15 +43,33 @@
 .icon-arrow-left-3:before {
 	content: "\f104";
 }
-.icon-arrow-right-:before {
+.icon-arrow-right:before {
 	content: "\f106";
 }
 .icon-arrow-right-1:before {
 	content: "\f107";
 }
-.icon-arrow-up-:before {
+.icon-arrow-up:before {
 	content: "\f108";
 }
 .icon-arrow-up-1:before {
 	content: "\f109";
+}
+.icon-slice:before {
+	content: "\f10a";
+}
+.icon-slice-1:before {
+	content: "\f10b";
+}
+.icon-sound-off:before {
+	content: "\f10c";
+}
+.icon-sound-off-1:before {
+	content: "\f10d";
+}
+.icon-sound-on:before {
+	content: "\f10e";
+}
+.icon-sound-on-1:before {
+	content: "\f10f";
 }

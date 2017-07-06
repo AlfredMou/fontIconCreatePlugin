@@ -22,6 +22,7 @@ module.exports = {
     devtool: '#eval-source-map',
     plugins: [
         new FontIconCreatePlugin({
+            entry:"/src/.icons",
             name:"icon",
             output:{
                 font:"/src/iconfont",

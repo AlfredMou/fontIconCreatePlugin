@@ -31,24 +31,27 @@
     font-weight: normal !important;
 }
 
-.icon-slice:before {
+.icon-arrow-left-:before {
 	content: "\f101";
 }
-.icon-sound-off:before {
+.icon-arrow-left-1:before {
 	content: "\f102";
 }
-.icon-sound-on:before {
+.icon-arrow-left-2:before {
 	content: "\f103";
 }
-.icon-arrow-left-:before {
+.icon-arrow-left-3:before {
 	content: "\f104";
 }
-.icon-arrow-left-1:before {
-	content: "\f105";
-}
-.icon-arrow-right:before {
+.icon-arrow-right-:before {
 	content: "\f106";
 }
-.icon-arrow-up:before {
+.icon-arrow-right-1:before {
 	content: "\f107";
+}
+.icon-arrow-up-:before {
+	content: "\f108";
+}
+.icon-arrow-up-1:before {
+	content: "\f109";
 }

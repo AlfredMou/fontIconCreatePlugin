@@ -2,6 +2,8 @@
 *sublime*
 *.idea*
 example
+dist
+icon-font-loader
 npm-debug.log
 
 .DS_Store

@@ -31,45 +31,51 @@
     font-weight: normal !important;
 }
 
-.icon-arrow-left:before {
+.icon-arrow-left-a:before {
 	content: "\f101";
 }
-.icon-arrow-left-1:before {
+.icon-arrow-left:before {
 	content: "\f102";
 }
-.icon-arrow-left-2:before {
+.icon-arrow-left-1:before {
 	content: "\f103";
 }
-.icon-arrow-left-3:before {
+.icon-arrow-left-2:before {
 	content: "\f104";
 }
-.icon-arrow-right:before {
+.icon-arrow-right-a:before {
+	content: "\f105";
+}
+.icon-arrow-right-b:before {
 	content: "\f106";
 }
-.icon-arrow-right-1:before {
+.icon-arrow-right:before {
 	content: "\f107";
 }
-.icon-arrow-up:before {
+.icon-arrow-right-1:before {
 	content: "\f108";
 }
-.icon-arrow-up-1:before {
+.icon-arrow-up:before {
 	content: "\f109";
 }
-.icon-slice:before {
+.icon-arrow-up-1:before {
 	content: "\f10a";
 }
-.icon-slice-1:before {
+.icon-slice:before {
 	content: "\f10b";
 }
-.icon-sound-off:before {
+.icon-slice-1:before {
 	content: "\f10c";
 }
-.icon-sound-off-1:before {
+.icon-sound-off:before {
 	content: "\f10d";
 }
-.icon-sound-on:before {
+.icon-sound-off-1:before {
 	content: "\f10e";
 }
-.icon-sound-on-1:before {
+.icon-sound-on:before {
 	content: "\f10f";
+}
+.icon-sound-on-1:before {
+	content: "\f110";
 }

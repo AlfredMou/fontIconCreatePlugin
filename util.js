@@ -93,7 +93,7 @@ module.exports={
         let n = [],nameList=[],svgList=[],result={};
 
         arry.forEach((value)=>{
-            result=this.delRepeatName(value,result)
+            this.delRepeatName(value,result)
         });
         return result
     },
@@ -103,10 +103,16 @@ module.exports={
         if(result[name]===undefined){
             result[name]=[];
             result[name].push(value);
+            return 0;
         }else{
-            result[name].push(value);
+            if(result[name].indexOf(value)>-1){
+                return result[name].indexOf(value)
+            }else{
+                result[name].push(value);
+                return result.length-1;
+            }
+
         }
-        return result;
     },
     createFileCache:function (classNames,cachePath) {
         var list=[],hasCache=false;

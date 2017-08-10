@@ -9,8 +9,8 @@ var extractLESS = new ExtractTextPlugin({
 
 module.exports = {
     entry: {
-        bundle: './src/index.js',
-        test: './src/index.js',
+        bundle: './test/index.js',
+        test: './test/index.js',
     },
     output: {
         path: __dirname + '/dist',
@@ -21,16 +21,17 @@ module.exports = {
     module: {
         rules: [
             { test: /\.svg$/, loader: 'vusion-iconmaker', include: path.join(__dirname, 'src/icons') },
-            { test: /\.css$/, use: ExtractTextPlugin.extract({ fallback: 'style-loader', use: ["css-loader"]}) },
+            { test: /\.css$/, use: ExtractTextPlugin.extract({ fallback: 'style-loader', use: ["css-loader","icon-font-loader"]}) },
             { test: /\.(woff|eot|ttf|svg)$/, loader: 'url-loader', exclude: path.join(__dirname, 'src/icons') }
         ]
     },
     devtool: '#eval-source-map',
     plugins: [
         new FontIconCreatePlugin({
-            entry:"/src/icons",
-            name:"icon",
-            output:"/src/iconfont",
+            entry:"/test/icons",
+            name:"iconDD",
+            output:"/test/iconfont",
+            cssEmbed:true
             //publishPath:"/publish/font/"
         }),extractLESS
     ],

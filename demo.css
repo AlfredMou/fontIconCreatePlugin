@@ -1,9 +1,9 @@
 @font-face {
     font-family: "${name}";
-    src: url("${publishPath}${name}.eot?#iefix") format("embedded-opentype"),
-    url("${publishPath}${name}.woff") format("woff"),
-    url("${publishPath}${name}.ttf") format("truetype"),
-    url("${publishPath}${name}.svg#iconFont") format("svg");
+    src: url("${publishPath}${name}.eot?v=${hash}#iefix") format("embedded-opentype"),
+    url("${publishPath}${name}.woff?v=${hash}") format("woff"),
+    url("${publishPath}${name}.ttf?v=${hash}") format("truetype"),
+    url("${publishPath}${name}.svg?v=${hash}#iconFont") format("svg");
     font-weight: normal;
     font-style: normal;
 }
